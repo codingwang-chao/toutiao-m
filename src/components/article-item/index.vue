@@ -88,5 +88,13 @@ export default {
       }
     }
   }
+
+  .label-wrap {
+    font-size: 11px;
+    color: #b4b4b4;
+  }
+  .label-wrap span {
+    margin-right: 12px;
+  }
 }
 </style>
