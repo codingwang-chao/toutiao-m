@@ -1,19 +1,20 @@
 <template>
   <!-- <div class="article-item">文章列表项</div> -->
   <van-cell class="article-item">
-    <div slot="title" class="title van-multi-ellipsis--l3">这是标题内容这是标题内容这是标题内容这是标题内容这是标题内容这是标题内容这是标题内容这是标题内容这是标题内容这是标题内容</div>
+    <div slot="title" class="title van-multi-ellipsis--l3">{{ article.title }}</div>
     <div slot="label">
       <div
         v-if="article.cover.type === 3"
         class="cover-wrap"
       >
-        <div class="cover-wrap-item">
+        <div
+          class="cover-wrap-item"
+          v-for="(img, index) in article.cover.images"
+          :key="index"
+        >
           <van-image
-            width="116"
-            height="73"
+            class="cover-item"
             fit="cover"
-            v-for="(img, index) in article.cover.images"
-            :key="index"
             :src="img"
           />
         </div>
@@ -70,6 +71,22 @@ export default {
   .right-cover {
     width: 116px;
     height: 73px;
+  }
+
+  .cover-wrap {
+    padding: 15px 0;
+    display: flex;
+    .cover-wrap-item {
+      flex: 1;
+      height: 73px;
+      &:not(:last-child) {
+        padding-right: 4px;
+      }
+      .cover-item {
+        width: 100%;
+        height: 73px;
+      }
+    }
   }
 }
 </style>
