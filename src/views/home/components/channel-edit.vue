@@ -25,7 +25,7 @@
         v-for="(channel, index) in userChannels"
         :key="index"
         :text="channel.name"
-        @click="onUserChannelClick(index)"
+        @click="onUserChannelClick(channel, index)"
       />
     </van-grid>
 
@@ -51,7 +51,8 @@
 <script>
 import {
   getAllChannels,
-  addUserChannel
+  addUserChannel,
+  deleteUserChannel
 } from '@/api/channel'
 import { mapState } from 'vuex'
 import { setItem } from '@/utils/storage'
@@ -140,17 +141,17 @@ export default {
       }
     },
 
-    onUserChannelClick (index) {
+    onUserChannelClick (channel, index) {
       if (this.isEdit && index !== 0) {
         // 编辑状态，删除频道
-        this.deleteChannel(index)
+        this.deleteChannel(channel, index)
       } else {
         // 非编辑状态，切换频道
         this.switchChannel(index)
       }
     },
 
-    deleteChannel (index) {
+    async deleteChannel (channel, index) {
       // 如果删除的是当前激活频道之前的频道
       if (index <= this.active) {
         // 更新激活频道的索引
@@ -159,6 +160,13 @@ export default {
       this.userChannels.splice(index, 1)
 
       // 数据持久化
+      if (this.user) {
+        // 登录了，持久化到线上
+        await deleteUserChannel(channel.id)
+      } else {
+        // 没有登录，持久化到本地
+        setItem('user-channels', this.userChannels)
+      }
     },
 
     switchChannel (index) {
