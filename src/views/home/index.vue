@@ -27,6 +27,18 @@
         <article-list :channel="channel" />
         <!-- /文章列表 -->
       </van-tab>
+      <!-- 汉堡按钮定位把列表最后的位置给挡住了，解决办法的就是在这里添加一个占位元素 -->
+      <div
+        slot="nav-right"
+        class="wap-nav-placeholder"
+      ></div>
+      <div
+        slot="nav-right"
+        @click="isChannelEditShow = true"
+        class="wap-nav-wrap"
+      >
+        <van-icon name="wap-nav" />
+      </div>
     </van-tabs>
     <!-- /文章频道列表 -->
 
@@ -38,25 +50,29 @@
       close-icon-position="top-left"
       get-container="body"
       style="height: 100%"
-    />
+    >
+      <channel-edit />
+    </van-popup>
   </div>
 </template>
 
 <script>
 import { getUserChannels } from '@/api/user'
 import ArticleList from './components/article-list'
+import ChannelEdit from './components/channel-edit'
 
 export default {
   name: 'HomeIndex',
   components: {
-    ArticleList
+    ArticleList,
+    ChannelEdit
   },
   props: {},
   data () {
     return {
       active: 0, // 控制被激活的标签
       channels: [], // 频道列表
-      isChannelEditShow: false // 控制编辑频道的显示状态
+      isChannelEditShow: true // 控制编辑频道的显示状态
     }
   },
   computed: {},
@@ -103,6 +119,36 @@ export default {
       width: 15px !important;
       height: 3px;
       background: #3296fa;
+    }
+  }
+
+  .wap-nav-placeholder {
+    width: 33px;
+    flex-shrink: 0;
+  }
+
+  .wap-nav-wrap {
+    position: fixed;
+    right: 0;
+    width: 33px;
+    height: 43px;
+    background-color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: .9;
+    .van-icon {
+      font-size: 24px;
+    }
+    &:before {
+      content: '';
+      width: 1px;
+      background: url("./line.png") no-repeat;
+      background-size: contain;
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
     }
   }
 }
