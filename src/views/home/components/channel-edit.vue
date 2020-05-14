@@ -35,6 +35,7 @@
         v-for="(channel, index) in recommendChannels"
         :key="index"
         :text="channel.name"
+        @click="onAdd(channel)"
       />
     </van-grid>
   </div>
@@ -59,6 +60,7 @@ export default {
   },
   computed: {
     // 推荐的频道列表
+    // 计算属性会观测内部依赖数据的变化而重新求值
     recommendChannels () {
       // 思路：所有频道 - 我的频道 = 剩下的推荐频道
       // filter 方法：过滤数据，根据方法返回的布尔值 true 来收集数据
@@ -101,6 +103,12 @@ export default {
     async loadAllChannels () {
       const { data } = await getAllChannels()
       this.allChannels = data.data.channels
+    },
+
+    onAdd (channel) {
+      this.userChannels.push(channel)
+
+      // TODO: 数据持久化
     }
   }
 }
