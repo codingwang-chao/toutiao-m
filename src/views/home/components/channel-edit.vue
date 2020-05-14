@@ -10,12 +10,14 @@
         plain
         round
         size="mini"
-      >编辑</van-button>
+        @click="isEdit = !isEdit"
+      >{{ isEdit ? '完成' : '编辑' }}</van-button>
     </van-cell>
 
     <van-grid :gutter="10">
       <van-grid-item
         class="grid-item"
+        :icon="isEdit ? 'clear' : ''"
         v-for="(channel, index) in userChannels"
         :key="index"
         :text="channel.name"
@@ -55,7 +57,8 @@ export default {
   },
   data () {
     return {
-      allChannels: [] // 所有频道数据列表
+      allChannels: [], // 所有频道数据列表
+      isEdit: false // 控制编辑的显示状态
     }
   },
   computed: {
@@ -131,7 +134,15 @@ export default {
       .van-grid-item__text {
         font-size: 14px;
         color: #222;
+        margin-top: 0;
       }
+    }
+    /deep/ .van-grid-item__icon {
+      position: absolute;
+      right: -5px;
+      top: -5px;
+      font-size: 20px;
+      color: #ccc;
     }
   }
 }
