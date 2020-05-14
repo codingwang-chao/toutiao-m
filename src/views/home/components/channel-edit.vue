@@ -17,10 +17,11 @@
     <van-grid :gutter="10">
       <van-grid-item
         class="grid-item"
-        :icon="isEdit ? 'clear' : ''"
+        :icon="(isEdit && index !== 0) ? 'clear' : ''"
         v-for="(channel, index) in userChannels"
         :key="index"
         :text="channel.name"
+        @click="onUserChannelClick(index)"
       />
     </van-grid>
 
@@ -112,6 +113,26 @@ export default {
       this.userChannels.push(channel)
 
       // TODO: 数据持久化
+    },
+
+    onUserChannelClick (index) {
+      if (this.isEdit && index !== 0) {
+        // 编辑状态，删除频道
+        this.deleteChannel(index)
+      } else {
+        // 非编辑状态，切换频道
+        this.switchChannel(index)
+      }
+    },
+
+    deleteChannel (index) {
+      this.userChannels.splice(index, 1)
+
+      // 数据持久化
+    },
+
+    switchChannel (index) {
+      console.log('切换频道')
     }
   }
 }
