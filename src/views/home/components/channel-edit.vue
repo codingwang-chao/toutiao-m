@@ -49,7 +49,10 @@
 </template>
 
 <script>
-import { getAllChannels } from '@/api/channel'
+import {
+  getAllChannels,
+  addUserChannel
+} from '@/api/channel'
 import { mapState } from 'vuex'
 import { setItem } from '@/utils/storage'
 
@@ -120,12 +123,17 @@ export default {
       this.allChannels = data.data.channels
     },
 
-    onAdd (channel) {
+    async onAdd (channel) {
       this.userChannels.push(channel)
 
       // TODO: 数据持久化
       if (this.user) {
         // 登录了，数据存储到线上
+        await addUserChannel({
+          channels: [
+            { id: channel.id, seq: this.userChannels.length }
+          ]
+        })
       } else {
         // 没有登录，数据存储到本地
         setItem('user-channels', this.userChannels)
