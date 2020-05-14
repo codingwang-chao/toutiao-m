@@ -50,6 +50,8 @@
 
 <script>
 import { getAllChannels } from '@/api/channel'
+import { mapState } from 'vuex'
+import { setItem } from '@/utils/storage'
 
 export default {
   name: 'ChannelEdit',
@@ -71,6 +73,7 @@ export default {
     }
   },
   computed: {
+    ...mapState(['user']),
     // 推荐的频道列表
     // 计算属性会观测内部依赖数据的变化而重新求值
     recommendChannels () {
@@ -121,6 +124,12 @@ export default {
       this.userChannels.push(channel)
 
       // TODO: 数据持久化
+      if (this.user) {
+        // 登录了，数据存储到线上
+      } else {
+        // 没有登录，数据存储到本地
+        setItem('user-channels', this.userChannels)
+      }
     },
 
     onUserChannelClick (index) {
