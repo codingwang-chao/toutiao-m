@@ -51,8 +51,13 @@
       get-container="body"
       style="height: 100%"
     >
+      <!--
+        模板中的 $event 表示事件参数
+       -->
       <channel-edit
         :user-channels="channels"
+        @close="isChannelEditShow = false"
+        @update-active="active = $event"
       />
     </van-popup>
   </div>
@@ -89,6 +94,10 @@ export default {
       const { data } = await getUserChannels()
       this.channels = data.data.channels
     }
+
+    // onUpdateActive (index) {
+    //   this.active = index
+    // }
   }
 }
 </script>

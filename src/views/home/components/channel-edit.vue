@@ -133,6 +133,12 @@ export default {
 
     switchChannel (index) {
       console.log('切换频道')
+
+      // 切换频道
+      this.$emit('update-active', index)
+
+      // 关闭弹出层
+      this.$emit('close')
     }
   }
 }
@@ -164,6 +170,7 @@ export default {
       top: -5px;
       font-size: 20px;
       color: #ccc;
+      z-index: 5;
     }
   }
 }
