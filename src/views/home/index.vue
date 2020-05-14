@@ -17,7 +17,7 @@
     <!--
       标签页组件有一个功能，只有你第1次查看标签页的时候才会渲染里面的内容
      -->
-    <van-tabs v-model="active">
+    <van-tabs class="channel-tabs" v-model="active">
       <van-tab
         :title="channel.name"
         v-for="channel in channels"
@@ -29,6 +29,16 @@
       </van-tab>
     </van-tabs>
     <!-- /文章频道列表 -->
+
+    <van-popup
+      v-model="isChannelEditShow"
+      position="bottom"
+      class="channel-edit-popup"
+      closeable
+      close-icon-position="top-left"
+      get-container="body"
+      style="height: 100%"
+    />
   </div>
 </template>
 
@@ -45,7 +55,8 @@ export default {
   data () {
     return {
       active: 0, // 控制被激活的标签
-      channels: [] // 频道列表
+      channels: [], // 频道列表
+      isChannelEditShow: false // 控制编辑频道的显示状态
     }
   },
   computed: {},
@@ -79,6 +90,19 @@ export default {
     }
     .van-button__text {
       font-size: 14px;
+    }
+  }
+
+  .channel-tabs {
+    /deep/ .van-tab {
+      border-right: 1px solid #edeff3;
+      border-bottom: 1px solid #edeff3;
+    }
+    /deep/ .van-tabs__line {
+      bottom: 20px;
+      width: 15px !important;
+      height: 3px;
+      background: #3296fa;
     }
   }
 }

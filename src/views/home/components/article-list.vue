@@ -74,7 +74,6 @@ export default {
   mounted () {},
   methods: {
     async onLoad () {
-      console.log('onLoad')
       // 1. 请求获取数据
       const { data } = await getArticles({
         channel_id: this.channel.id, // 频道 ID
