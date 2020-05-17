@@ -9,6 +9,7 @@
         type="info"
         round
         size="small"
+        to="/search"
       >搜索</van-button>
     </van-nav-bar>
     <!-- /导航栏 -->
@@ -82,7 +83,7 @@ export default {
     return {
       active: 0, // 控制被激活的标签
       channels: [], // 频道列表
-      isChannelEditShow: true // 控制编辑频道的显示状态
+      isChannelEditShow: false // 控制编辑频道的显示状态
     }
   },
   computed: {
