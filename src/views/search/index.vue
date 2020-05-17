@@ -16,6 +16,7 @@
     <!-- /搜索栏 -->
 
     <!-- 联想建议 -->
+    <search-suggestion />
     <!-- /联想建议 -->
 
     <!-- 历史记录 -->
@@ -27,9 +28,13 @@
 </template>
 
 <script>
+import SearchSuggestion from './components/search-suggestion'
+
 export default {
   name: 'SearchIndex',
-  components: {},
+  components: {
+    SearchSuggestion
+  },
   props: {},
   data () {
     return {
