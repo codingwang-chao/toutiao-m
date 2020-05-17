@@ -20,6 +20,7 @@
     <!-- /联想建议 -->
 
     <!-- 历史记录 -->
+    <search-history />
     <!-- /历史记录 -->
 
     <!-- 搜索结果 -->
@@ -29,11 +30,13 @@
 
 <script>
 import SearchSuggestion from './components/search-suggestion'
+import SearchHistory from './components/search-history'
 
 export default {
   name: 'SearchIndex',
   components: {
-    SearchSuggestion
+    SearchSuggestion,
+    SearchHistory
   },
   props: {},
   data () {
