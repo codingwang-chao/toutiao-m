@@ -36,6 +36,7 @@
       v-else
       :search-histories="searchHistories"
       @search="onSearch"
+      @update-histories="searchHistories = $event"
     />
     <!-- /历史记录 -->
   </div>
@@ -67,7 +68,12 @@ export default {
   computed: {
     ...mapState(['user'])
   },
-  watch: {},
+  watch: {
+    // 监视搜索历史记录的变化，存储到本地存储
+    searchHistories () {
+      setItem('search-histories', this.searchHistories)
+    }
+  },
   created () {
     this.loadSearchHistories()
   },
@@ -89,7 +95,7 @@ export default {
       // 如果用户已登录，则把搜索历史记录存储到线上
       //    提示：只要我们调用获取搜索结果的数据接口，后端会给我们自动存储用户的搜索历史记录
       // 如果没有登录页，则把搜索历史记录存储到本地
-      setItem('search-histories', this.searchHistories)
+      // setItem('search-histories', this.searchHistories)
 
       // 展示搜索结果
       this.isResultShow = true
