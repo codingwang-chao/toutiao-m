@@ -37,7 +37,7 @@
         ref="article-content"
       ></div>
       <!-- 文章评论列表 -->
-      <comment-list />
+      <comment-list :source="articleId" />
       <!-- /文章评论列表 -->
     </div>
 
