@@ -18,6 +18,7 @@
       :title="history"
       v-for="(history, index) in searchHistories"
       :key="index"
+      @click="onDelete(history, index)"
     >
       <van-icon
         v-show="isDeleteShow"
@@ -46,7 +47,21 @@ export default {
   watch: {},
   created () {},
   mounted () {},
-  methods: {}
+  methods: {
+    onDelete (history, index) {
+      // 如果是删除状态，则执行删除操作
+      if (this.isDeleteShow) {
+        this.searchHistories.splice(index, 1)
+        // 持久化处理
+        // 1. 修改本地存储的数据
+        // 2. 请求接口删除线上的数据
+        return
+      }
+
+      // 非删除状态，展示搜索结果
+      this.$emit('search', history)
+    }
+  }
 }
 </script>
 

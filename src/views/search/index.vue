@@ -35,6 +35,7 @@
     <search-history
       v-else
       :search-histories="searchHistories"
+      @search="onSearch"
     />
     <!-- /历史记录 -->
   </div>
