@@ -9,32 +9,37 @@
     />
     <!-- /导航栏 -->
 
-    <h1 class="title">{{ article.title }}</h1>
-    <van-cell center class="user-info">
-      <div slot="title" class="name">{{ article.aut_name }}</div>
-      <van-image
-        slot="icon"
-        class="avatar"
-        round
-        fit="cover"
-        :src="article.aut_photo"
-      />
-      <div slot="label" class="pubdate">{{ article.pubdate | relativeTime }}</div>
-      <van-button
-        class="follow-btn"
-        :type="article.is_followed ? 'default' : 'info'"
-        :icon="article.is_followed ? '' : 'plus'"
-        round
-        size="small"
-        :loading="isFollowLoading"
-        @click="onFollow"
-      >{{ article.is_followed ? '已关注' : '关注' }}</van-button>
-    </van-cell>
-    <div
-      class="markdown-body"
-      v-html="article.content"
-      ref="article-content"
-    ></div>
+    <div class="article-wrap">
+      <h1 class="title">{{ article.title }}</h1>
+      <van-cell center class="user-info">
+        <div slot="title" class="name">{{ article.aut_name }}</div>
+        <van-image
+          slot="icon"
+          class="avatar"
+          round
+          fit="cover"
+          :src="article.aut_photo"
+        />
+        <div slot="label" class="pubdate">{{ article.pubdate | relativeTime }}</div>
+        <van-button
+          class="follow-btn"
+          :type="article.is_followed ? 'default' : 'info'"
+          :icon="article.is_followed ? '' : 'plus'"
+          round
+          size="small"
+          :loading="isFollowLoading"
+          @click="onFollow"
+        >{{ article.is_followed ? '已关注' : '关注' }}</van-button>
+      </van-cell>
+      <div
+        class="markdown-body"
+        v-html="article.content"
+        ref="article-content"
+      ></div>
+      <!-- 文章评论列表 -->
+      <comment-list />
+      <!-- /文章评论列表 -->
+    </div>
 
     <!-- 底部区域 -->
     <div class="article-bottom">
@@ -76,18 +81,13 @@ import {
 } from '@/api/article'
 import { ImagePreview } from 'vant'
 import { addFollow, deleteFollow } from '@/api/user'
-
-// ImagePreview({
-//   images: [
-//     'https://img.yzcdn.cn/vant/apple-1.jpg',
-//     'https://img.yzcdn.cn/vant/apple-2.jpg'
-//   ],
-//   startPosition: 0
-// })
+import CommentList from './components/comment-list'
 
 export default {
   name: 'ArticleIndex',
-  components: {},
+  components: {
+    CommentList
+  },
   // 在组件中获取动态路由参数：
   //    方式一：this.$route.params.articleId
   //    方式二：props 传参，推荐
@@ -200,6 +200,14 @@ export default {
 </script>
 
 <style scoped lang="less">
+.article-wrap {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 46px;
+  bottom: 44px;
+  overflow-y: auto;
+}
 .title {
   font-size: 20px;
   color: #3a3a3a;
