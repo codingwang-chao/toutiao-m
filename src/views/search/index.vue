@@ -46,7 +46,7 @@ import SearchSuggestion from './components/search-suggestion'
 import SearchHistory from './components/search-history'
 import SearchResult from './components/search-result'
 import { setItem, getItem } from '@/utils/storage'
-import { getSearchHistories } from '@/api/search'
+// import { getSearchHistories } from '@/api/search'
 import { mapState } from 'vuex'
 
 export default {
@@ -99,17 +99,17 @@ export default {
       // 因为后端帮我们存储的用户搜索历史记录太少了（只有4条）
       // 所以我们这里让后端返回的历史记录和本地的历史记录合并到一起
       // 如果用户已登录
-      let searchHistories = getItem('search-histories') || []
-      if (this.user) {
-        const { data } = await getSearchHistories()
-        // 合并数组： [...数组, ...数组]
-        // 把 Set 转为数组：[...Set对象]
-        // 数组去重：[...new Set([...数组, ...数组])
-        searchHistories = [...new Set([
-          ...searchHistories,
-          ...data.data.keywords
-        ])]
-      }
+      const searchHistories = getItem('search-histories') || []
+      // if (this.user) {
+      //   const { data } = await getSearchHistories()
+      //   // 合并数组： [...数组, ...数组]
+      //   // 把 Set 转为数组：[...Set对象]
+      //   // 数组去重：[...new Set([...数组, ...数组])
+      //   searchHistories = [...new Set([
+      //     ...searchHistories,
+      //     ...data.data.keywords
+      //   ])]
+      // }
 
       this.searchHistories = searchHistories
     }
