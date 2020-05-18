@@ -9,36 +9,26 @@
     />
     <!-- /导航栏 -->
 
-    <h1 class="title">牛逼程序员都用的开源工具，你用了 几个？</h1>
+    <h1 class="title">{{ article.title }}</h1>
     <van-cell center class="user-info">
-      <div slot="title" class="name">天涯小型客</div>
+      <div slot="title" class="name">{{ article.aut_name }}</div>
       <van-image
         slot="icon"
         class="avatar"
         round
         fit="cover"
-        src="https://img.yzcdn.cn/vant/cat.jpeg"
+        :src="article.aut_photo"
       />
-      <div slot="label" class="pubdate">14小时前</div>
+      <div slot="label" class="pubdate">{{ article.pubdate | relativeTime }}</div>
       <van-button
         class="follow-btn"
-        type="info"
-        icon="plus"
+        :type="article.is_followed ? 'default' : 'info'"
+        :icon="article.is_followed ? '' : 'plus'"
         round
         size="small"
-      >关注</van-button>
+      >{{ article.is_followed ? '已关注' : '关注' }}</van-button>
     </van-cell>
-    <div class="markdown-body">
-      <p>hello</p>
-      <p>world</p>
-      <a href="">dsadsa</a>
-      <ul>
-        <li>dnsa</li>
-        <li>dnsa</li>
-        <li>dnsa</li>
-        <li>dnsa</li>
-      </ul>
-    </div>
+    <div class="markdown-body" v-html="article.content"></div>
   </div>
 </template>
 
@@ -60,7 +50,9 @@ export default {
     }
   },
   data () {
-    return {}
+    return {
+      article: {} // 文章数据对象
+    }
   },
   computed: {},
   watch: {},
@@ -71,7 +63,7 @@ export default {
   methods: {
     async loadArticle () {
       const { data } = await getArticleById(this.articleId)
-      console.log(data)
+      this.article = data.data
     }
   }
 }
