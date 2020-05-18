@@ -28,10 +28,23 @@
         size="small"
       >关注</van-button>
     </van-cell>
+    <div class="markdown-body">
+      <p>hello</p>
+      <p>world</p>
+      <a href="">dsadsa</a>
+      <ul>
+        <li>dnsa</li>
+        <li>dnsa</li>
+        <li>dnsa</li>
+        <li>dnsa</li>
+      </ul>
+    </div>
   </div>
 </template>
 
 <script>
+import './github-markdown.css'
+
 export default {
   name: 'ArticleIndex',
   components: {},
@@ -60,7 +73,7 @@ export default {
 .title {
   font-size: 20px;
   color: #3a3a3a;
-  padding: 14px;
+  padding: 24px 20px 18px;
   background-color: #fff;
   margin: 0;
 }
@@ -83,5 +96,14 @@ export default {
     width: 85px;
     height: 29px;
   }
+}
+
+ul {
+  list-style: unset;
+}
+
+.markdown-body {
+  padding: 14px;
+  background-color: #fff;
 }
 </style>
