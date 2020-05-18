@@ -44,6 +44,7 @@
 
 <script>
 import './github-markdown.css'
+import { getArticleById } from '@/api/article'
 
 export default {
   name: 'ArticleIndex',
@@ -63,9 +64,16 @@ export default {
   },
   computed: {},
   watch: {},
-  created () {},
+  created () {
+    this.loadArticle()
+  },
   mounted () {},
-  methods: {}
+  methods: {
+    async loadArticle () {
+      const { data } = await getArticleById(this.articleId)
+      console.log(data)
+    }
+  }
 }
 </script>
 
