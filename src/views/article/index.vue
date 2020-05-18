@@ -55,7 +55,7 @@ export default {
   //      this.articleId
   props: {
     articleId: {
-      type: String,
+      type: [String, Number, Object],
       required: true
     }
   },
