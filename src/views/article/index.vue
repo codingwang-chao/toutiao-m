@@ -28,13 +28,26 @@
         size="small"
       >{{ article.is_followed ? '已关注' : '关注' }}</van-button>
     </van-cell>
-    <div class="markdown-body" v-html="article.content"></div>
+    <div
+      class="markdown-body"
+      v-html="article.content"
+      ref="article-content"
+    ></div>
   </div>
 </template>
 
 <script>
 import './github-markdown.css'
 import { getArticleById } from '@/api/article'
+import { ImagePreview } from 'vant'
+
+// ImagePreview({
+//   images: [
+//     'https://img.yzcdn.cn/vant/apple-1.jpg',
+//     'https://img.yzcdn.cn/vant/apple-2.jpg'
+//   ],
+//   startPosition: 0
+// })
 
 export default {
   name: 'ArticleIndex',
@@ -64,6 +77,37 @@ export default {
     async loadArticle () {
       const { data } = await getArticleById(this.articleId)
       this.article = data.data
+
+      // 数据改变影响视图更新（DOM数据）不是立即的
+      // 所以如果需要在修改数据之后马上操作被该数据影响的视图 DOM，需要把这个代码放到 $nextTick 中
+
+      // this.$nextTick 是 Vue 提供的一个方法
+      // 参考文档：
+      this.$nextTick(() => {
+        this.handlePerviewImage()
+      })
+    },
+
+    handlePerviewImage () {
+      // 1. 获取文章内容 DOM 容器
+      const articleContent = this.$refs['article-content']
+
+      // 2. 得到所有的 img 标签
+      const imgs = articleContent.querySelectorAll('img')
+
+      const imgPaths = [] // 收集所有的图片路径
+
+      // 3. 循环 img 列表，给 img 注册点击事件
+      imgs.forEach((img, index) => {
+        imgPaths.push(img.src)
+        img.onclick = function () {
+          // 4. 在事件处理函数中调用 ImagePreview() 预览
+          ImagePreview({
+            images: imgPaths, // 预览图片路径列表
+            startPosition: index // 起始位置
+          })
+        }
+      })
     }
   }
 }
