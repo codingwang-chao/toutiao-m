@@ -15,16 +15,26 @@
       :comment="comment"
     />
     <!-- /当前评论项 -->
+
+    <!-- 所有评论回复 -->
+    <van-cell title="所有回复" />
+    <comment-list
+      :source="comment.com_id"
+      type="c"
+    />
+    <!-- /所有评论回复 -->
   </div>
 </template>
 
 <script>
 import CommentItem from './comment-item'
+import CommentList from './comment-list'
 
 export default {
   name: 'CommentReply',
   components: {
-    CommentItem
+    CommentItem,
+    CommentList
   },
   props: {
     // 查看回复的评论项
