@@ -11,6 +11,7 @@
         v-for="(comment, index) in list"
         :key="index"
         :comment="comment"
+        @reply-click="$emit('reply-click', $event)"
       />
       <!-- <van-cell
         v-for="(comment, index) in list"

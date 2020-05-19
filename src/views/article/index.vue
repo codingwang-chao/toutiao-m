@@ -41,6 +41,7 @@
         :source="articleId"
         :list="commentList"
         @update-total-count="totalCommentCount = $event"
+        @reply-click="onReplyClick"
       />
       <!-- /文章评论列表 -->
     </div>
@@ -84,6 +85,15 @@
       />
     </van-popup>
     <!-- /发布评论 -->
+
+    <!-- 评论回复 -->
+    <van-popup
+      v-model="isReplyShow"
+      position="bottom"
+    >
+      <comment-reply />
+    </van-popup>
+    <!-- /评论回复 -->
   </div>
 </template>
 
@@ -100,12 +110,14 @@ import { ImagePreview } from 'vant'
 import { addFollow, deleteFollow } from '@/api/user'
 import CommentList from './components/comment-list'
 import PostComment from './components/post-comment'
+import CommentReply from './components/comment-reply'
 
 export default {
   name: 'ArticleIndex',
   components: {
     CommentList,
-    PostComment
+    PostComment,
+    CommentReply
   },
   // 在组件中获取动态路由参数：
   //    方式一：this.$route.params.articleId
@@ -124,7 +136,8 @@ export default {
       isCollectLoading: false, // 收藏的 loading 状态
       isPostShow: false, // 控制发布评论的显示状态
       commentList: [], // 文章评论列表
-      totalCommentCount: 0 // 评论总数据量
+      totalCommentCount: 0, // 评论总数据量
+      isReplyShow: false // 控制回复的显示状态
     }
   },
   computed: {},
@@ -227,6 +240,13 @@ export default {
 
       // 关闭发布评论弹出层
       this.isPostShow = false
+    },
+
+    onReplyClick (comment) {
+      console.log('onReplyClick', comment)
+
+      // 展示回复内容
+      this.isReplyShow = true
     }
   }
 }
