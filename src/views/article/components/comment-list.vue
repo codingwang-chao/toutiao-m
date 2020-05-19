@@ -67,6 +67,8 @@ export default {
         limit: this.limit // 每页大小
       })
 
+      this.$emit('update-total-count', data.data.total_count)
+
       // 2. 把数据放到列表中
       const { results } = data.data
       this.list.push(...results)

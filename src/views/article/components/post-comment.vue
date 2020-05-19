@@ -62,10 +62,7 @@ export default {
       })
 
       this.$emit('post-success', data.data.new_obj)
-      // 处理响应结果
-
       this.$toast.success('发布成功')
-
       // 发布成功，清空文本框内容
       this.message = ''
     }
