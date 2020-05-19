@@ -74,7 +74,7 @@
       v-model="isPostShow"
       position="bottom"
     >
-      hello world
+      <post-comment />
     </van-popup>
     <!-- /发布评论 -->
   </div>
@@ -92,11 +92,13 @@ import {
 import { ImagePreview } from 'vant'
 import { addFollow, deleteFollow } from '@/api/user'
 import CommentList from './components/comment-list'
+import PostComment from './components/post-comment'
 
 export default {
   name: 'ArticleIndex',
   components: {
-    CommentList
+    CommentList,
+    PostComment
   },
   // 在组件中获取动态路由参数：
   //    方式一：this.$route.params.articleId
