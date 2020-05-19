@@ -37,7 +37,10 @@
         ref="article-content"
       ></div>
       <!-- 文章评论列表 -->
-      <comment-list :source="articleId" />
+      <comment-list
+        :source="articleId"
+        :list="commentList"
+      />
       <!-- /文章评论列表 -->
     </div>
 
@@ -74,7 +77,10 @@
       v-model="isPostShow"
       position="bottom"
     >
-      <post-comment :target="articleId" />
+      <post-comment
+        :target="articleId"
+        @post-success="onPostSuccess"
+      />
     </van-popup>
     <!-- /发布评论 -->
   </div>
@@ -115,7 +121,8 @@ export default {
       article: {}, // 文章数据对象
       isFollowLoading: false, // 关注用户按钮的 loading 状态
       isCollectLoading: false, // 收藏的 loading 状态
-      isPostShow: false // 控制发布评论的显示状态
+      isPostShow: false, // 控制发布评论的显示状态
+      commentList: [] // 文章评论列表
     }
   },
   computed: {},
@@ -207,6 +214,13 @@ export default {
         this.article.attitude = 1
       }
       this.$toast.success(`${this.article.attitude === 1 ? '' : '取消'}点赞成功`)
+    },
+
+    onPostSuccess (comment) {
+      // 把发布成功的评论数据对象放到评论列表顶部
+      this.commentList.unshift(comment)
+      // 关闭发布评论弹出层
+      this.isPostShow = false
     }
   }
 }
