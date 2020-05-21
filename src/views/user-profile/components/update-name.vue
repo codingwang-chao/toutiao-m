@@ -12,12 +12,12 @@
 
     <div class="name-field-wrap">
       <van-field
-        v-model="message"
+        v-model="localName"
         rows="2"
         autosize
         type="textarea"
-        maxlength="50"
-        placeholder="请输入留言"
+        maxlength="7"
+        placeholder="请输入昵称"
         show-word-limit
       />
     </div>
@@ -28,10 +28,19 @@
 export default {
   name: 'UpdateName',
   components: {},
-  props: {},
+  props: {
+    name: {
+      type: String,
+      required: true
+    }
+  },
   data () {
     return {
-      message: ''
+      // var a = 1
+      // var b = a
+      // b = 123
+      // a? 1
+      localName: this.name
     }
   },
   computed: {},
