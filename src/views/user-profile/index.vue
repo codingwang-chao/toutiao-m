@@ -39,9 +39,21 @@
       position="bottom"
       :style="{ height: '100%' }"
     >
+      <!--
+        当你传递给子组件的数据既要使用又要修改，例如这里的 name
+        这种情况下我们可以使用 v-model 简写
+       -->
+      <!-- :name="user.name"
+      @update-name="user.name = $event" -->
+
+      <!--
+        v-model="user.name"
+          默认传递一个名字叫 value 的数据 :value="user.name"
+          默认监听 input 事件 @input="user.name = $event"
+        v-model 的本质还是父子组件通信，它仅仅是简化了父组件的使用
+       -->
       <update-name
-        :name="user.name"
-        @update-name="user.name = $event"
+        v-model="user.name"
         @close="isEditNameShow = false"
       />
     </van-popup>

@@ -31,7 +31,8 @@ export default {
   name: 'UpdateName',
   components: {},
   props: {
-    name: {
+    // 声明接收父组件 v-model 传递的 value 数据
+    value: {
       type: String,
       required: true
     }
@@ -42,7 +43,7 @@ export default {
       // var b = a
       // b = 123
       // a? 1
-      localName: this.name
+      localName: this.value
     }
   },
   computed: {},
@@ -62,7 +63,9 @@ export default {
         })
 
         // 更新成功 -> 修改父组件的 name -> 关闭弹出层
-        this.$emit('update-name', this.localName)
+        // 发布 input 事件，更新父组件 v-model 绑定的数据
+        this.$emit('input', this.localName)
+        // this.$emit('update-name', this.localName)
         this.$emit('close')
 
         this.$toast.success('保存成功')
