@@ -7,7 +7,13 @@
       left-arrow
       @click-left="$router.back()"
     />
-    <input type="file" hidden ref="file">
+    <input
+      type="file"
+      hidden
+      accept="image/*"
+      ref="file"
+      @change="onFileChange"
+    >
     <!-- /导航栏 -->
     <van-cell title="头像" is-link center @click="$refs.file.click()">
       <van-image
@@ -143,6 +149,14 @@ export default {
     async loadUserProfile () {
       const { data } = await getUserProfile()
       this.user = data.data
+    },
+
+    onFileChange () {
+      // 展示弹出层
+      // 在弹出层里面预览图片
+
+      // 为了解决相同文件不触发 change 事件，所以在这里手动的清空 file 的 value
+      this.$refs.file.value = ''
     }
   }
 }
