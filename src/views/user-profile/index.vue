@@ -114,6 +114,18 @@
       />
     </van-popup>
     <!-- /修改生日 -->
+
+    <!-- 修改头像 -->
+    <van-popup
+      v-model="isEditPhotoShow"
+      position="bottom"
+      style="height: 100%"
+    >
+      <update-photo
+        :image="previewImage"
+      />
+    </van-popup>
+    <!-- /修改头像 -->
   </div>
 </template>
 
@@ -122,13 +134,15 @@ import { getUserProfile } from '@/api/user'
 import UpdateName from './components/update-name'
 import UpdateGender from './components/update-gender'
 import UpdateBirthday from './components/update-birthday'
+import UpdatePhoto from './components/update-photo'
 
 export default {
   name: 'UserProfile',
   components: {
     UpdateName,
     UpdateGender,
-    UpdateBirthday
+    UpdateBirthday,
+    UpdatePhoto
   },
   props: {},
   data () {
@@ -136,7 +150,9 @@ export default {
       user: {}, // 用户数据
       isEditNameShow: false, // 编辑昵称的显示状态
       isEditGenderShow: false, // 编辑性别的显示状态
-      isEditBirthdayShow: false // 编辑生日的显示状态
+      isEditBirthdayShow: false, // 编辑生日的显示状态
+      isEditPhotoShow: false, // 编辑头像的显示状态
+      previewImage: null // 上传预览图片
     }
   },
   computed: {},
@@ -152,8 +168,12 @@ export default {
     },
 
     onFileChange () {
-      // 展示弹出层
       // 在弹出层里面预览图片
+      const blob = window.URL.createObjectURL(this.$refs.file.files[0])
+      this.previewImage = blob
+
+      // 展示弹出层
+      this.isEditPhotoShow = true
 
       // 为了解决相同文件不触发 change 事件，所以在这里手动的清空 file 的 value
       this.$refs.file.value = ''
