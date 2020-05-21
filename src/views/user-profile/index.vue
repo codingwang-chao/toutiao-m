@@ -69,12 +69,14 @@
 
         我们一般把最常用的数据设计为 v-model 绑定，把不太常用的数据设计为 .sync
 
+        :abc.sync="user.gender"
+        :a.sync="user.xxx"
+
         参考文档：https://cn.vuejs.org/v2/guide/components-custom-events.html#sync-%E4%BF%AE%E9%A5%B0%E7%AC%A6
        -->
       <update-name
+        v-if="isEditNameShow"
         v-model="user.name"
-        :abc.sync="user.gender"
-        :a.sync="user.xxx"
         @close="isEditNameShow = false"
       />
     </van-popup>
