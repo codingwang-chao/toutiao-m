@@ -48,6 +48,11 @@ const routes = [
     // 将动态路由参数映射到组件的 props 中，无论是访问还是维护性都很方便
     // 参考文档：https://router.vuejs.org/zh/guide/essentials/passing-props.html
     props: true
+  },
+  {
+    path: '/user/profile',
+    name: 'user-profile',
+    component: () => import('@/views/user-profile')
   }
 ]
 
