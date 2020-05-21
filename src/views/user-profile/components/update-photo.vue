@@ -86,6 +86,10 @@ export default {
 </script>
 
 <style scoped lang="less">
+.update-photo {
+  height: 100%;
+}
+
 .toolbar {
   position: fixed;
   left: 0;
