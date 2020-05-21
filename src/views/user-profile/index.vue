@@ -41,6 +41,7 @@
     >
       <update-name
         :name="user.name"
+        @update-name="user.name = $event"
         @close="isEditNameShow = false"
       />
     </van-popup>
