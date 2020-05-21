@@ -21,6 +21,8 @@
         show-word-limit
       />
     </div>
+
+    <!-- <button @click="$emit('update:abc', 0)">修改 gender</button> -->
   </div>
 </template>
 
@@ -36,6 +38,9 @@ export default {
       type: String,
       required: true
     }
+    // abc: {
+    //   type: Number
+    // }
   },
   data () {
     return {

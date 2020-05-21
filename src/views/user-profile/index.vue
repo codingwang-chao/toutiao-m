@@ -52,8 +52,29 @@
           默认监听 input 事件 @input="user.name = $event"
         v-model 的本质还是父子组件通信，它仅仅是简化了父组件的使用
        -->
+
+      <!--
+        v-model 只能使用一次
+       -->
+
+      <!--
+        如果有多个数据需要保持同步，使用 .sync 修饰符。
+        :gender="user.gender"
+        @update-gender="user.gender = $event"
+
+        :gender.sync="user.gender"
+          :gender="user.gender"
+          @update:gender="user.gender = $event"
+          @update:属性名称="user.gender = $event"
+
+        我们一般把最常用的数据设计为 v-model 绑定，把不太常用的数据设计为 .sync
+
+        参考文档：https://cn.vuejs.org/v2/guide/components-custom-events.html#sync-%E4%BF%AE%E9%A5%B0%E7%AC%A6
+       -->
       <update-name
         v-model="user.name"
+        :abc.sync="user.gender"
+        :a.sync="user.xxx"
         @close="isEditNameShow = false"
       />
     </van-popup>
