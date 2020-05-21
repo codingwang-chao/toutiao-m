@@ -7,8 +7,9 @@
       left-arrow
       @click-left="$router.back()"
     />
+    <input type="file" hidden ref="file">
     <!-- /导航栏 -->
-    <van-cell title="头像" is-link center>
+    <van-cell title="头像" is-link center @click="$refs.file.click()">
       <van-image
         width="30"
         height="30"
