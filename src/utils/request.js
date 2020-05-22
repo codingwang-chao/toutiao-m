@@ -9,6 +9,12 @@ import { Toast } from 'vant'
 // 这里单独加载 store，和在组件中 this.$store 一个东西
 import store from '@/store/'
 
+import router from '@/router/'
+
+const refreshTokenReq = axios.create({
+  baseURL: 'http://ttapi.research.itcast.cn/'
+})
+
 const request = axios.create({
   baseURL: 'http://ttapi.research.itcast.cn/', // 基础路径
   transformResponse: [function (data) {
@@ -54,7 +60,7 @@ request.interceptors.response.use(function (response) {
   // Any status code that lie within the range of 2xx cause this function to trigger
   // Do something with response data
   return response
-}, function (error) {
+}, async function (error) {
   // 请求响应失败进入这里
   // 超过 2xx 的状态码都会进入这里
 
@@ -65,6 +71,36 @@ request.interceptors.response.use(function (response) {
     Toast.fail('客户端请求参数异常')
   } else if (status === 401) {
     // token 无效
+    // 如果没有 user 或者 user.token，直接去登录
+    const { user } = store.state
+    if (!user || !user.token) {
+      // 直接跳转到登录页
+      return redirectLogin()
+    }
+
+    // 使用 refresh_token 请求获取新的 token
+    try {
+      const { data } = await refreshTokenReq({
+        method: 'PUT',
+        url: '/app/v1_0/authorizations',
+        headers: {
+          Authorization: `Bearer ${user.refresh_token}`
+        }
+      })
+
+      // 拿到新的 token 之后把它更新到容器中
+      user.token = data.data.token
+      store.commit('setUser', user)
+
+      // 把失败的请求重新发出去
+      // error.config 是本次请求的相关配置信息对象
+      // 这里使用 request 发请求，它会走自己的拦截器
+      // 它的请求拦截器中通过 store 容器访问 token 数据
+      return request(error.config)
+    } catch (err) {
+      // 刷新 token 都失败了，直接跳转登录页
+      redirectLogin()
+    }
   } else if (status === 403) {
     // 没有权限操作
     Toast.fail('没有权限操作')
@@ -76,6 +112,10 @@ request.interceptors.response.use(function (response) {
   // 抛出异常
   return Promise.reject(error)
 })
+
+function redirectLogin () {
+  router.replace('/login')
+}
 
 // 导出
 export default request
