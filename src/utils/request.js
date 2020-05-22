@@ -114,7 +114,15 @@ request.interceptors.response.use(function (response) {
 })
 
 function redirectLogin () {
-  router.replace('/login')
+  router.replace({
+    name: 'login',
+    // 传递查询参数，查询参数会以 ？ 作为分隔符放到 url 后面
+    query: {
+      // 数据名是自己起的
+      // router.currentRoute 和我们在组件中获取的 this.$route 是一个东西
+      redirect: router.currentRoute.fullPath
+    }
+  })
 }
 
 // 导出
