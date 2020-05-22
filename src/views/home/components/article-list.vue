@@ -1,5 +1,5 @@
 <template>
-  <div class="article-list">
+  <div class="article-list" ref="article-list">
     <!--
       List 组件通过 loading 和 finished 两个变量控制加载状态，
 当组件初始化或滚动到到底部时，会触发 load 事件并将 loading 设置成 true，此时可以发起异步操作并更新数据，数据更新完毕后，将 loading 设置成 false 即可。
@@ -46,6 +46,7 @@
 <script>
 import { getArticles } from '@/api/article'
 import ArticleItem from '@/components/article-item'
+import { debounce } from 'lodash'
 
 export default {
   name: 'ArticleList',
@@ -65,13 +66,22 @@ export default {
       finished: false, // 控制加载结束的状态，当加载结束，不再触发加载更多
       timestamp: null, // 获取下一页数据的时间戳
       isRefreshLoading: false, // 下拉刷新的 loading 状态
-      refreshSuccessText: '' // 下拉刷新成功的提示文本
+      refreshSuccessText: '', // 下拉刷新成功的提示文本
+      scrollTop: 0 // 列表滚动到顶部的距离
     }
   },
   computed: {},
   watch: {},
-  created () {},
-  mounted () {},
+  mounted () {
+    const articleList = this.$refs['article-list']
+    articleList.onscroll = debounce(() => {
+      this.scrollTop = articleList.scrollTop
+    }, 50)
+  },
+  activated () {
+    // 把记录的到顶部的距离重新设置回去
+    this.$refs['article-list'].scrollTop = this.scrollTop
+  },
   methods: {
     async onLoad () {
       // 1. 请求获取数据

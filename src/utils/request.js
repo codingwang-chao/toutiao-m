@@ -3,6 +3,7 @@
  */
 import axios from 'axios'
 import JSONbig from 'json-bigint'
+import { Toast } from 'vant'
 
 // 在非组件模块中获取 store 必须通过这种方式
 // 这里单独加载 store，和在组件中 this.$store 一个东西
@@ -48,6 +49,33 @@ request.interceptors.request.use(function (config) {
 })
 
 // 响应拦截器
+request.interceptors.response.use(function (response) {
+  // 响应成功进入这里
+  // Any status code that lie within the range of 2xx cause this function to trigger
+  // Do something with response data
+  return response
+}, function (error) {
+  // 请求响应失败进入这里
+  // 超过 2xx 的状态码都会进入这里
+
+  const status = error.response.status
+
+  if (status === 400) {
+    // 客户端请求参数错误
+    Toast.fail('客户端请求参数异常')
+  } else if (status === 401) {
+    // token 无效
+  } else if (status === 403) {
+    // 没有权限操作
+    Toast.fail('没有权限操作')
+  } else if (status >= 500) {
+    // 服务端异常
+    Toast.fail('服务端异常，请稍后重试')
+  }
+
+  // 抛出异常
+  return Promise.reject(error)
+})
 
 // 导出
 export default request
