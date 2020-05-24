@@ -89,7 +89,12 @@ export default {
   computed: {
     ...mapState(['user'])
   },
-  watch: {},
+  watch: {
+    user () {
+      this.active = 0
+      this.loadChannels()
+    }
+  },
   created () {
     this.loadChannels()
   },

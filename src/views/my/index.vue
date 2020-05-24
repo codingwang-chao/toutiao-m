@@ -109,10 +109,13 @@ export default {
     ...mapState(['user'])
   },
   watch: {},
-  created () {
-    this.loadCurrentUser()
-  },
+  created () {},
   mounted () {},
+  activated () {
+    if (this.user) {
+      this.loadCurrentUser()
+    }
+  },
   methods: {
     async loadCurrentUser () {
       const { data } = await getCurrentUser()

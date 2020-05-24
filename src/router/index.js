@@ -103,7 +103,7 @@ router.beforeEach((to, from, next) => {
       next(false)
     })
   } else {
-    /// 不需要登录状态的页面，直接过去
+    // 不需要登录状态的页面，直接过去
     next()
   }
 })
