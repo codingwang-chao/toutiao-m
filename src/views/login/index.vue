@@ -21,7 +21,6 @@
     <van-form
       :show-error="false"
       :show-error-message="false"
-      validate-first
       ref="login-form"
       @submit="onLogin"
       @failed="onFailed"
@@ -119,6 +118,7 @@ export default {
       // 3. 请求调用登录
       try {
         const { data } = await login(this.user)
+        console.log(data)
 
         // 4. 处理响应结果
         this.$toast.success('登录成功')

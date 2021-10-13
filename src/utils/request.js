@@ -12,11 +12,13 @@ import store from '@/store/'
 import router from '@/router/'
 
 const refreshTokenReq = axios.create({
-  baseURL: 'http://ttapi.research.itcast.cn/'
+  // baseURL: 'http://ttapi.research.itcast.cn/'
+  baseURL: 'http://api-toutiao-web.itheima.net/'
 })
 
 const request = axios.create({
-  baseURL: 'http://ttapi.research.itcast.cn/', // 基础路径
+  // baseURL: 'http://ttapi.research.itcast.cn/', // 基础路径
+  baseURL: 'http://api-toutiao-web.itheima.net/',
   transformResponse: [function (data) {
     // 后端返回的数据可能不是 JSON 格式字符串
     // 如果不是的话，那么 JSONbig.parse 调用就会报错

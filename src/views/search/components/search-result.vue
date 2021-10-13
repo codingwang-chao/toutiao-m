@@ -10,6 +10,12 @@
         v-for="(article, index) in list"
         :key="index"
         :title="article.title"
+        :to="{
+          name: 'article',
+          params: {
+            articleId: article.art_id
+          }
+        }"
       />
     </van-list>
   </div>
@@ -52,7 +58,7 @@ export default {
       // 2. 将数据放到数据列表中
       const { results } = data.data
       this.list.push(...results)
-
+      console.log(this.list)
       // 3. 关闭本次的 loading
       this.loading = false
 
@@ -65,6 +71,11 @@ export default {
         this.finished = true
       }
     }
+    // ,
+    // toArticle(articleId) {
+    //   console.log(articleId)
+    //   // this.$router.push('artile/:articleId')
+    // }
   }
 }
 </script>

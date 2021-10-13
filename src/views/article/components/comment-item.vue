@@ -1,7 +1,5 @@
 <template>
-  <van-cell
-    class="comment-item"
-  >
+  <van-cell class="comment-item">
     <van-image
       slot="icon"
       class="avatar"
